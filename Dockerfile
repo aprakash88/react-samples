@@ -1,37 +1,16 @@
-# Extending image
-FROM node:current
+# Use an official node runtime as a parent image
+FROM node:8
 
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get -y install autoconf automake libtool nasm make pkg-config git apt-utils
+WORKDIR /app/
 
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
-# Versions
-RUN npm -v
-RUN node -v
-
-# Install app dependencies
-COPY package.json /usr/src/app/
-COPY package-lock.json /usr/src/app/
+# Install dependencies
+COPY package.json /app/
 
 RUN npm install
 
-# Bundle app source
-COPY . /usr/src/app
+# Add rest of the client code
+COPY . /app/
 
-# Port to listener
 EXPOSE 3000
 
-# Environment variables
-ENV NODE_ENV production
-ENV PORT 3000
-ENV PUBLIC_PATH "/"
-
-RUN npm run start:build
-
-# Main command
-CMD [ "npm", "run", "start:server" ]
-Dockerfile.test
+CMD npm start
