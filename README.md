@@ -26,7 +26,7 @@ module.exports = {
 ```
 
 * Add your sample to `src/js/app.js` by adding: `samples.push(require('./mysample/mysample-view'));`
-
+#
 ### License
 
 MIT
